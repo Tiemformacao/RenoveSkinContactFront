@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <h2>Clientes a Contactar</h2>
+    <a routerLink="/clientes" class="btn btn-success mb-3">Clientes</a>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Cidade</th>
+          <th>Próximo Contato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.id }}</td>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.cidade }}</td>
+          <td>{{ cliente.dataCompra | date:'dd/MM/yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

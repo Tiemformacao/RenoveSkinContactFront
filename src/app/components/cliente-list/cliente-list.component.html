@@ -1,0 +1,28 @@
+<div class="container mt-4">
+    <h2>Lista de Clientes</h2>
+    <div class="div-buttons">
+      <a routerLink="/clientes/cadastro" class="btn btn-success mb-3">Novo Cliente</a>
+      <a routerLink="/clientes-contactar" class="btn btn-success mb-3">Clientes a contactar</a>
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Cidade</th>
+          <th>Data da Compra</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{ cliente.id }}</td>
+          <td>{{ cliente.nome }}</td>
+          <td>{{ cliente.cidade }}</td>
+          <td>{{ cliente.dataCompra | date:'dd/MM/yyyy' }}</td>
+          <td>{{ cliente.ativo ? 'Ativo' : 'Inativo' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
