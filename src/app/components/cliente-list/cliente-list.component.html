@@ -25,7 +25,7 @@
           <td>
             <button *ngIf="cliente.id" 
               class="btn btn-info btn-sm" 
-              (click)="exibirHistorico(cliente.id)">
+              (click)="abrirModal(cliente)">
               Ver Histórico 
             </button>
           </td>
@@ -34,7 +34,10 @@
     </table>
   </div>
 
-  <h6>Adicionar Novo Histórico</h6>
+ 
+  <!-- Modal -->
+<app-modal [title]="'Histórico de Interações'" [isVisible]="isModalVisible" (fechar)="fecharModal()">
+  <!-- Conteúdo do Modal -->
   <form (ngSubmit)="adicionarHistorico()">
     <div class="mb-3">
       <label for="dataInteracao" class="form-label">Data</label>
@@ -59,9 +62,8 @@
     <button type="submit" class="btn btn-primary">Adicionar</button>
   </form>
 
-
   <div *ngIf="historico.length > 0">
-    <h5>Histórico de Interações</h5>
+    <h5 class="mt-3">Histórico</h5>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -75,17 +77,12 @@
           <td>{{ interacao.dataInteracao | date: 'dd/MM/yyyy' }}</td>
           <td>{{ interacao.observacao }}</td>
           <td>
-            <button
-              *ngIf="interacao.id"
-              class="btn btn-danger btn-sm"
-              (click)="deletarHistorico(interacao.id!)">
+            <button class="btn btn-danger btn-sm" (click)="deletarHistorico(interacao.id!)">
               Deletar
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-  
-
   </div>
-  
+</app-modal>

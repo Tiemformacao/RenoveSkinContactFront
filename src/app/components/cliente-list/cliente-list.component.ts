@@ -6,12 +6,13 @@ import { RouterModule } from '@angular/router';
 import { HistoricoInteracaoService } from '../../services/historico-interacao.service';
 import { HistoricoInteracao } from '../../models/historico-interacao.model';
 import { FormsModule } from '@angular/forms';
+import { ModalComponent } from '../modal/modal.component'; 
 
 
 @Component({
   selector: 'app-cliente-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, ModalComponent],
   templateUrl: './cliente-list.component.html',
   styleUrl: './cliente-list.component.css'
 })
@@ -19,6 +20,8 @@ export class ClienteListComponent implements OnInit {
 
   clientes: Cliente[] = []; // Usando o modelo Cliente
   historico: HistoricoInteracao[] = [];
+  clienteSelecionado: Cliente | null = null;
+  isModalVisible: boolean = false;
   
   novaInteracao: HistoricoInteracao = {
     clienteId: 0,
@@ -40,18 +43,6 @@ export class ClienteListComponent implements OnInit {
     });
   }
 
-  exibirHistorico(clienteId: number): void {
-    this.historicoService.listarPorCliente(clienteId).subscribe({
-      next: (data) => {
-        this.historico = data;
-        this.novaInteracao.clienteId = clienteId; // Prepara a nova interação para o cliente
-        console.log('Histórico carregado:', this.historico);
-      },
-      error: (err) => {
-        console.error('Erro ao carregar histórico:', err);
-      },
-    });
-  }
 
   adicionarHistorico(): void {
     this.historicoService.adicionarHistorico(this.novaInteracao).subscribe({
@@ -84,7 +75,29 @@ export class ClienteListComponent implements OnInit {
   }
   
   
+  abrirModal(cliente: Cliente): void {
+    this.clienteSelecionado = cliente;
+    this.isModalVisible = true;
   
+    // Carrega o histórico do cliente
+    this.historicoService.listarPorCliente(cliente.id!).subscribe({
+      next: (data) => {
+        this.historico = data;
+        this.novaInteracao.clienteId = cliente.id!;
+      },
+      error: (err) => console.error('Erro ao carregar histórico:', err),
+    });
+  }
+  
+  fecharModal(): void {
+    this.isModalVisible = false;
+    this.historico = [];
+    this.novaInteracao = { clienteId: 0, dataInteracao: '', observacao: '' };
+  }
 
 
 }
+
+
+
+
