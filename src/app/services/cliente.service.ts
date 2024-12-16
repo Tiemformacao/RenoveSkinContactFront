@@ -35,5 +35,10 @@ export class ClienteService {
   buscarParaContato(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(`${this.apiUrl}/para-contato`);
   }
+
+  atualizarStatus(id: number, ativo: boolean): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/${id}/status?ativo=${ativo}`, {});
+  }
+  
   
 }

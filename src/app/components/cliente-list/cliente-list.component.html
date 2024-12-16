@@ -56,7 +56,22 @@
             </div>
           </td>
           
-          <td>{{ cliente.ativo ? 'Ativo' : 'Inativo' }}</td>
+          <!-- <td>{{ cliente.ativo ? 'Ativo' : 'Inativo' }}</td> -->
+
+          <td>
+            <!-- Status com ícone -->
+            <span [class.text-success]="cliente.ativo" [class.text-danger]="!cliente.ativo">
+              {{ cliente.ativo ? 'Ativo' : 'Inativo' }}
+              <i
+                class="bi"
+                [class.bi-toggle-on]="cliente.ativo"
+                [class.bi-toggle-off]="!cliente.ativo"
+                (click)="atualizarStatus(cliente)"
+                style="cursor: pointer;"
+                title="Clique para {{ cliente.ativo ? 'desativar' : 'ativar' }}"
+              ></i>
+            </span>
+          </td>
 
 
           <td>

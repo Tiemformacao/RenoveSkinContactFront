@@ -127,7 +127,29 @@ export class ClienteListComponent implements OnInit {
     cliente.editando = false;
   }
   
+  atualizarStatus(cliente: Cliente): void {
+    const novoStatus = !cliente.ativo; // Alterna entre ativo/inativo
+    if (cliente.id) { // Verifica se o id existe
+      this.clienteService.atualizarStatus(cliente.id, novoStatus).subscribe({
+        next: () => {
+          cliente.ativo = novoStatus;
+          alert(`Cliente ${novoStatus ? 'ativado' : 'desativado'} com sucesso!`);
+          this.reordenarLista();
+        },
+        error: (err) => {
+          console.error('Erro ao atualizar status:', err);
+          alert('Erro ao atualizar status. Tente novamente!');
+        },
+      });
+    } else {
+      console.error('Erro: Cliente não possui ID válido.');
+    }
+  }
   
+  reordenarLista(): void {
+    // Move os clientes inativos para o final da lista
+    this.clientes.sort((a, b) => (a.ativo === b.ativo ? 0 : a.ativo ? -1 : 1));
+  }
 
 }
 
