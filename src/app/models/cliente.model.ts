@@ -4,5 +4,9 @@ export interface Cliente {
     cidade: string;
     dataCompra: string;
     ativo: boolean;
+
+    // Propriedades temporárias para edição
+    editando?: boolean;
+    dataCompraOriginal?: string;
   }
   

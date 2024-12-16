@@ -20,8 +20,45 @@
           <td>{{ cliente.id }}</td>
           <td>{{ cliente.nome }}</td>
           <td>{{ cliente.cidade }}</td>
-          <td>{{ cliente.dataCompra | date:'dd/MM/yyyy' }}</td>
+          <!-- <td>{{ cliente.dataCompra | date:'dd/MM/yyyy' }}</td> -->
+          
+
+          <td>
+            <!-- Se estiver editando, mostra o input -->
+            <div *ngIf="cliente.editando">
+              <input 
+                type="date" 
+                [(ngModel)]="cliente.dataCompra" 
+                class="form-control" 
+              />
+              <button 
+                class="btn btn-sm btn-success"
+                (click)="salvarData(cliente)"
+              >
+                ✔
+              </button>
+              <button 
+                class="btn btn-sm btn-danger" 
+                (click)="cancelarEdicao(cliente)"
+              >
+                ✖
+              </button>
+            </div>
+          
+            <!-- Se não estiver editando, mostra a data e o ícone -->
+            <div *ngIf="!cliente.editando">
+              {{ cliente.dataCompra | date: 'dd/MM/yyyy' }}
+              <i 
+                class="bi bi-pencil-square text-primary" 
+                style="cursor: pointer;" 
+                (click)="editarData(cliente)">
+              </i>
+            </div>
+          </td>
+          
           <td>{{ cliente.ativo ? 'Ativo' : 'Inativo' }}</td>
+
+
           <td>
             <button *ngIf="cliente.id" 
               class="btn btn-info btn-sm" 

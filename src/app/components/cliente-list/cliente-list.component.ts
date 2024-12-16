@@ -92,9 +92,42 @@ export class ClienteListComponent implements OnInit {
   fecharModal(): void {
     this.isModalVisible = false;
     this.historico = [];
-    this.novaInteracao = { clienteId: 0, dataInteracao: '', observacao: '' };
+    this.novaInteracao = { 
+      clienteId: 0, 
+      dataInteracao: '', 
+      observacao: '' 
+    };
   }
 
+  editarData(cliente: Cliente): void {
+    // Salva o valor original para poder cancelar
+    cliente.editando = true;
+    cliente.dataCompraOriginal = cliente.dataCompra;
+  }
+  
+  salvarData(cliente: Cliente): void {
+    if (!cliente.id) return;
+  
+    this.clienteService.atualizar(cliente.id, cliente).subscribe({
+      next: (data) => {
+        alert('Data atualizada com sucesso!');
+        cliente.editando = false; // Sai do modo de edição
+      },
+      error: (err) => {
+        console.error('Erro ao atualizar data:', err);
+        alert('Erro ao atualizar a data. Tente novamente!');
+      }
+    });
+  }
+  
+  cancelarEdicao(cliente: Cliente): void {
+    if (cliente.dataCompraOriginal) { 
+      cliente.dataCompra = cliente.dataCompraOriginal;
+    }
+    cliente.editando = false;
+  }
+  
+  
 
 }
 
