@@ -40,5 +40,8 @@ export class ClienteService {
     return this.http.put<void>(`${this.apiUrl}/${id}/status?ativo=${ativo}`, {});
   }
   
+  buscarPorNome(nome: string): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.apiUrl}/buscar?nome=${nome}`);
+  }
   
 }

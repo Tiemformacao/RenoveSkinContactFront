@@ -22,6 +22,7 @@ export class ClienteListComponent implements OnInit {
   historico: HistoricoInteracao[] = [];
   clienteSelecionado: Cliente | null = null;
   isModalVisible: boolean = false;
+  nomeBusca: string = ''; // Armazena o valor digitado
   
   novaInteracao: HistoricoInteracao = {
     clienteId: 0,
@@ -149,6 +150,34 @@ export class ClienteListComponent implements OnInit {
   reordenarLista(): void {
     // Move os clientes inativos para o final da lista
     this.clientes.sort((a, b) => (a.ativo === b.ativo ? 0 : a.ativo ? -1 : 1));
+  }
+
+
+  buscarClientes(): void {
+    if (this.nomeBusca.trim() === '') {
+      this.carregarClientes(); // Recarrega todos os clientes se a busca estiver vazia
+      return;
+    }
+  
+    this.clienteService.buscarPorNome(this.nomeBusca).subscribe({
+      next: (data) => {
+        this.clientes = data; // Atualiza a lista com os resultados filtrados
+      },
+      error: (err) => {
+        console.error('Erro ao buscar clientes:', err);
+      },
+    });
+  }
+  
+  carregarClientes(): void {
+    this.clienteService.listarTodos().subscribe({
+      next: (data) => {
+        this.clientes = data;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar clientes:', err);
+      },
+    });
   }
 
 }

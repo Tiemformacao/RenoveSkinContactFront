@@ -4,6 +4,16 @@
       <a routerLink="/clientes/cadastro" class="btn btn-success mb-3">Novo Cliente</a>
       <a routerLink="/clientes-contactar" class="btn btn-success mb-3">Clientes a contactar</a>
     </div>
+    <div class="mb-3, buscaNome">
+      <h4>Busca:</h4>
+      <input
+        type="text"
+        [(ngModel)]="nomeBusca"
+        (input)="buscarClientes()"
+        class="form-control"
+        placeholder="Buscar cliente por nome"
+      />
+    </div>
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
