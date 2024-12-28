@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,8 @@ import { Login } from '../../auth/login';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  encapsulation: ViewEncapsulation.None // Remove o encapsulamento de estilos
 })
 export class LoginComponent {
 
@@ -32,7 +33,7 @@ export class LoginComponent {
           this.loginService.addToken(token);
           this.router.navigate(['/clientes'])
 
-          // Usuário ou senha estavam incorretos;
+        // Usuário ou senha estavam incorretos;
         } else {
           alert('usuário ou senha incorretos!')
         }

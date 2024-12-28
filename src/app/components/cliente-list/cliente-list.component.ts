@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../models/cliente.model';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,8 @@ import { ModalComponent } from '../modal/modal.component';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, ModalComponent],
   templateUrl: './cliente-list.component.html',
-  styleUrl: './cliente-list.component.css'
+  styleUrl: './cliente-list.component.css',
+  encapsulation: ViewEncapsulation.None // Remove o encapsulamento de estilos
 })
 export class ClienteListComponent implements OnInit {
 

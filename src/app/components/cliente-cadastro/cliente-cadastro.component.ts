@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ClienteService } from '../../services/cliente.service';
 import { Cliente } from '../../models/cliente.model';
 import { Router } from '@angular/router';
@@ -11,7 +11,8 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './cliente-cadastro.component.html',
-  styleUrl: './cliente-cadastro.component.css'
+  styleUrl: './cliente-cadastro.component.css',
+  encapsulation: ViewEncapsulation.None // Remove o encapsulamento de estilos
 })
 export class ClienteCadastroComponent {
   cliente: Cliente = {
