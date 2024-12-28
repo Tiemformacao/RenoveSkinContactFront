@@ -11,8 +11,11 @@ export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
 
   let router = inject(Router);
 
-  // Inclui o token do localStorage em cada requisição http (Inclui no header);
+  // Obtem o token do localStorage
   let token = localStorage.getItem('token');
+
+  // Inclui o token do localStorage em cada requisição http (Inclui no header);
+  // Se o token existir e a URL não incluir '/api/login', adiciona o token no cabeçalho
   if (token && !router.url.includes('api/login')) {
     request = request.clone({
       setHeaders: { Authorization: 'Bearer ' + token },
@@ -26,10 +29,10 @@ export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
 	  
         // Esse tratamento de erro aqui é para quando o usuário, por exemplo, não manda o token na requisição;
         if (err.status === 401) {
-          alert('401 - tratar aqui');
+          alert('Sessão expirada. Realize o login novamente.');
           router.navigate(['/login']);
         } else if (err.status === 403) {
-          alert('Realize o login novamente!');
+          alert('Você não tem permissão para acessar este recurso.');
 		  router.navigate(['/login']);
         } else {
           console.error('HTTP error:', err);
@@ -37,7 +40,7 @@ export const meuhttpInterceptor: HttpInterceptorFn = (request, next) => {
 		
 		
       } else {
-        console.error('An error occurred:', err);
+        console.error('Ocorreu um erro inesperado:', err);
       }
 
       return throwError(() => err);
