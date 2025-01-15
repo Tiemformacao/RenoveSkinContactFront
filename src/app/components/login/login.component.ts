@@ -39,7 +39,7 @@ export class LoginComponent {
         }
       },
       error: erro => {
-        alert('deu erro');
+        alert('Entre em contato com o administrador!');
       }
     })
   }
